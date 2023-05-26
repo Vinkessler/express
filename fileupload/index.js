@@ -12,7 +12,7 @@ const fileUpload = require('express-fileupload');
 const app = express()
 const port = 3000
 
-const uploadDirectory = "C:\\Users\\Vinke\\OneDrive\\Documents\\Uploads"
+const uploadDirectory = "path for file to be saved"
 
 app.use(fileUpload());
 
