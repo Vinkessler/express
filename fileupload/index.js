@@ -12,7 +12,7 @@ const fileUpload = require('express-fileupload');
 const app = express()
 const port = 3000
 
-const uploadDirectory = "path for file to be saved"
+const uploadDirectory = "path for file to be saved"  //add your path for the file to be saved
 
 app.use(fileUpload());
 
