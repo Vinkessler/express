@@ -8,16 +8,17 @@ const fs = require('fs')
 const path = require('path')
 const fileUpload = require('express-fileupload');
 
-
 const app = express()
 const port = 3000
 
-const uploadDirectory = "path for file to be saved"  //add your path for the file to be saved
+const uploadDirectory = "Path you want file to be uploaded to "  //add your path for the file to be saved. add extra \ next to ones in path
 
+//middleware
 app.use(fileUpload());
 
+// gets the html file from a directory to be displayed when connected to localhost:3000/upload
 app.get('/upload' ,(req,res) =>{
-    res.sendFile('index.html', { root: __dirname })
+    res.sendFile('index.html', { root: __dirname }) //__dirname specifies the root directory from which to serve the file
 })
 
 // Create a route to handle the file upload
@@ -26,8 +27,18 @@ app.post("/uploaded", (req, res) => {
       res.status(400).send("No file uploaded.");
       return;
     }
-  
-    const file = req.files.file;
+  ////req is the request object that represents the HTTP request. Files is the propery that holds the uploaded files info. file is the name of the field in the form
+    const file = req.files.file; 
+
+    //variable of the allowed file ext stored in an array
+    const allowedExtensions = ['.txt','.pdf']
+
+    // Checks for the file ext type to determine if valid
+    const fileExt = path.extname(file.name).toLowerCase()
+    if (!allowedExtensions.includes(fileExt)){
+      res.status(400).send('Invalid File Type')
+      return;
+    }
   
     // Generate a unique filename
     const filename = Date.now() + "-" + file.name;
